@@ -388,6 +388,7 @@ class _SearchBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 55.0,
+      padding: EdgeInsets.only(left: 15, right: 15),
       width: size.width * 0.8,
       decoration: BoxDecoration(
         color: backgroundColor,
@@ -399,25 +400,20 @@ class _SearchBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Padding(
-            padding:
-                EdgeInsets.only(left: (size.width * 0.8) * 0.03125), // 0.03125
-            child: Icon(
-              Icons.location_city,
-              color: iconColor,
-              // size: (size.width * 0.8) * 0.0625,
-            ),
-          ),
           SizedBox(
-            width: (size.width * 0.8) * 0.72,
+            width: size.width * 0.8 - 30,
             child: TextField(
               controller: controller,
               autofocus: true,
               autocorrect: false,
+              textInputAction: TextInputAction.search,
               textCapitalization: TextCapitalization.words,
               cursorColor: color ?? Theme.of(context).primaryColor,
               style: TextStyle(color: textColor),
               onEditingComplete: searchAddress,
+              onChanged: (text) {
+                searchAddress();
+              },
               decoration: InputDecoration(
                 suffix: GestureDetector(
                   onTap: controller.clear,
@@ -431,33 +427,12 @@ class _SearchBar extends StatelessWidget {
                   ),
                 ),
                 hintText: hintText,
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                      color: color ?? Theme.of(context).primaryColor),
-                ),
-                focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                      color: color ?? Theme.of(context).primaryColor),
-                ),
-                border: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                      color: color ?? Theme.of(context).primaryColor),
-                ),
+                enabledBorder: InputBorder.none,
+                focusedBorder: InputBorder.none,
+                border: InputBorder.none,
               ),
             ),
           ),
-          GestureDetector(
-            onTap: searchAddress,
-            child: Padding(
-              padding: EdgeInsets.only(
-                  right: (size.width * 0.8) * 0.0425), // 0.03125
-              child: Icon(
-                Icons.search_rounded,
-                color: color ?? Theme.of(context).primaryColor,
-                // size: (size.width * 0.8) * 0.0625,
-              ),
-            ),
-          )
         ],
       ),
     );
